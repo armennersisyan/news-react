@@ -1,0 +1,21 @@
+.modal-fallback {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  padding: 15px;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 9;
+}
+
+.modal {
+  position: relative;
+  width: 450px;
+  max-width: 100%;
+  background: #fff;
+  margin: 30px auto;
+  z-index: 10;
+}

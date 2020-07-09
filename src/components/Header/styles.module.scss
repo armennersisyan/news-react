@@ -1,0 +1,78 @@
+@import "../../styles/variables";
+
+.header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 60px;
+  background: #fff;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+  z-index: 2;
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+  .logo {
+    a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      img {
+        width: 30px;
+        margin-right: 10px;
+      }
+      h2 {
+        font-size: 21px;
+        font-family: $secondary-font;
+        color: #000;
+        margin: 0;
+      }
+    }
+  }
+  .navigation {
+    ul {
+      display: flex;
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      li {
+        &:first-child a {
+          margin-left: 0;
+        }
+        &.active {
+          a {
+            &:after {
+              width: 100%;
+            }
+          }
+        }
+        a {
+          position: relative;
+          color: $dark;
+          margin-left: 20px;
+          transition: 0.3s;
+          text-decoration: none;
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: $primary;
+            display: inline-block;
+            z-index: -1;
+            transition: 0.3s;
+          }
+          &:hover {
+            &:after {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
