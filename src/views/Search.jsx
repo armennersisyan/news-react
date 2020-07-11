@@ -4,6 +4,7 @@ import ArticlesList from '../components/Article/ArticlesList';
 
 class Search extends PureComponent {
   state = {
+    isLoading: false,
     articles: []
   };
   
@@ -12,16 +13,21 @@ class Search extends PureComponent {
   }
   
   componentDidUpdate(prevProps) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
+    if (this.props.location.pathname !== prevProps.location.pathname || this.props.location.search !== prevProps.location.search) {
       this.loadNewsBySearch();
     }
   }
   
   loadNewsBySearch = () => {
     const { match: { params } } = this.props;
-    getNewsBySearch(params.title).then(res => {
-      if (!res?.articles?.length) return;
-      this.setState({ articles: res.articles })
+    const { location: { search } } = this.props;
+    const sortBy = search.split('=')[1];
+    this.setState({ isLoading: true });
+    getNewsBySearch(params.title, params.source, sortBy).then(res => {
+      this.setState({
+        articles: res.articles,
+        isLoading: false,
+      })
     })
   };
   
@@ -33,7 +39,10 @@ class Search extends PureComponent {
           <div className="text-center">
             <h1>Search for "{ params.title }"</h1>
           </div>
-          <ArticlesList articles={this.state.articles} />
+          <ArticlesList
+            articles={this.state.articles}
+            loading={this.state.isLoading}
+          />
         </div>
       </>
     )

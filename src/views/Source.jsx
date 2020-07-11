@@ -4,6 +4,7 @@ import ArticlesList from '../components/Article/ArticlesList';
 
 class Source extends PureComponent {
   state = {
+    isLoading: false,
     articles: []
   };
   
@@ -19,9 +20,12 @@ class Source extends PureComponent {
   
   loadNewsBySource = () => {
     const { match: { params } } = this.props;
+    this.setState({ isLoading: true });
     getNewsBySource(params.source).then(res => {
-      if (!res?.articles?.length) return;
-      this.setState({ articles: res.articles })
+      this.setState({
+        articles: res.articles,
+        isLoading: false,
+      })
     })
   };
   
@@ -33,7 +37,10 @@ class Source extends PureComponent {
           <div className="text-center">
             <h1>News by Source "{ params.source }"</h1>
           </div>
-          <ArticlesList articles={this.state.articles} />
+          <ArticlesList
+            articles={this.state.articles}
+            loading={this.state.isLoading}
+          />
         </div>
       </>
     )

@@ -1,3 +1,5 @@
+@import "../../styles/variables";
+
 .modal-fallback {
   display: flex;
   align-items: center;
@@ -16,6 +18,32 @@
   width: 450px;
   max-width: 100%;
   background: #fff;
+  overflow: auto;
+  max-height: 100%;
   margin: 30px auto;
   z-index: 10;
+  &-close__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    background: transparent;
+    border: none;
+    outline: none;
+    position: absolute;
+    border-radius: 50px;
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    right: 10px;
+    color: $dark;
+    transition: 0.3s;
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      color: #fff;
+      background: rgba(0, 0, 0, 0.5);
+    }
+  }
 }

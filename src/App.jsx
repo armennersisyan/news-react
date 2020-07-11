@@ -17,11 +17,11 @@ const App = () => (
       <Switch>
         <Route path="/home" component={Home} />
         <Route path="/source/:source" component={Source} />
-        <Route path="/search/:title" component={Search} />
+        <Route path="/search/:title/:source?" component={Search} />
         <Route component={Home} />
       </Switch>
     </Router>
   </div>
-)
+);
 
 export default App;

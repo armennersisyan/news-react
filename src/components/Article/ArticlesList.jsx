@@ -1,10 +1,17 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Article from './Article';
 import ArticleDetail from './ArticleDetail';
+import ArticleLoader from './ArticleLoader';
 import Modal from '../Modal/Modal';
+import notFound from '../../assets/img/not found.png';
 
 class ArticlesList extends PureComponent {
+  static propTypes = {
+    articles: PropTypes.array.isRequired,
+    loading: PropTypes.bool,
+  };
+  
   state = {
     openModal: false,
     activeArticle: null,
@@ -25,8 +32,9 @@ class ArticlesList extends PureComponent {
   };
   
   render() {
-    const { articles } = this.props;
+    const { articles, loading } = this.props;
     return (
+      !loading ?
       <div className="row">
         {articles && articles.map((article, index) => (
           <Article
@@ -39,15 +47,13 @@ class ArticlesList extends PureComponent {
           open={this.state.openModal}
           onClose={this.handleModalClose}
         >
-          <ArticleDetail article={this.state.activeArticle} />
+          <ArticleDetail article={this.state.activeArticle}/>
         </Modal>
-      </div>
+        {!articles?.length && <img src={notFound} className="not-found" alt="not found" />}
+      </div> :
+      <ArticleLoader />
     )
   }
 }
-
-ArticlesList.propTypes = {
-  articles: PropTypes.array.isRequired,
-};
 
 export default ArticlesList;

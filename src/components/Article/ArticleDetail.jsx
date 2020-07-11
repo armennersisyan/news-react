@@ -6,7 +6,7 @@ import placeholder from "../../assets/img/placeholder.jpg";
 
 const ArticleDetail = ({ article, history }) => {
   const month = article.publishedAt && article.publishedAt.split('T')[0];
-  const imgSrc = article.urlToImage !== 'null' ? article.urlToImage : placeholder;
+  const imgSrc = (article.urlToImage !== 'null' && article.urlToImage !== null) ? article.urlToImage : placeholder;
   
   const handleSourceClick = (source_id) => {
     history.push(`/source/${source_id}`)
@@ -23,7 +23,7 @@ const ArticleDetail = ({ article, history }) => {
         {article.source.name}
       </span>
         <h4 className={styles['article-detail__title']}>
-          <a href={article.url} target="_blank">{article.title}</a>
+          <a href={article.url} target="_blank" rel="noopener noreferrer">{article.title}</a>
         </h4>
         <p className={styles['article-detail__desc']} dangerouslySetInnerHTML={{__html: article.description}} />
         <h6 className={styles['article-detail__author']}>

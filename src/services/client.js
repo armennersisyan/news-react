@@ -30,8 +30,10 @@ export function getNewsBySource(source) {
     })
 }
 
-export function getNewsBySearch(search) {
-  return fetch(`${API_URL}/everything?qInTitle=${search}&apiKey=${API_KEY}`)
+export function getNewsBySearch(search, source, sortBy) {
+  const sourceQuery = source ? `&sources=${source}` : '';
+  const sortByQuery = sortBy ? `&sortBy=${sortBy}` : '';
+  return fetch(`${API_URL}/everything?qInTitle=${search}${sourceQuery}${sortByQuery}&apiKey=${API_KEY}`)
     .then(checkStatus)
     .then(parseJSON)
     .catch(() => {

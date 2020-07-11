@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 import styles from './styles.module.scss'
 
 const modalRoot = document.getElementById('modal-root');
@@ -9,6 +10,17 @@ class Modal extends PureComponent {
     super(props);
     this.modalRef = React.createRef();
   }
+  
+  static propTypes = {
+    open: PropTypes.bool,
+    closable: PropTypes.bool,
+    children: PropTypes.element,
+  };
+  
+  static defaultProps = {
+    open: false,
+    closable: true,
+  };
   
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside);
@@ -30,8 +42,7 @@ class Modal extends PureComponent {
   
   
   render() {
-    const { open, children } = this.props;
-    
+    const { open, children, closable, onClose } = this.props;
     return open && createPortal(
       <div
         className={styles['modal-fallback']}
@@ -42,6 +53,14 @@ class Modal extends PureComponent {
           className={styles.modal}
         >
           <div>
+            {closable &&
+              <button
+                className={styles['modal-close__btn']}
+                onClick={onClose}
+              >
+                <i className="ti-close"/>
+              </button>
+            }
             {children}
           </div>
         </div>

@@ -4,13 +4,17 @@ import ArticlesList from '../components/Article/ArticlesList';
 
 class Home extends PureComponent {
   state = {
+    isLoading: false,
     articles: []
   };
   
   loadNews = () => {
+    this.setState({ isLoading: true });
     getEverything().then(res => {
-      if (!res?.articles?.length) return;
-      this.setState({ articles: res.articles })
+      this.setState({
+        articles: res.articles,
+        isLoading: false,
+      })
     })
   };
   
@@ -19,13 +23,17 @@ class Home extends PureComponent {
   }
   
   render() {
+    const { isLoading } = this.state;
     return (
       <>
         <div className="container">
           <div className="text-center">
             <h1>Latest News</h1>
           </div>
-          <ArticlesList articles={this.state.articles} />
+            <ArticlesList
+              articles={this.state.articles}
+              loading={isLoading}
+            />
         </div>
       </>
     )

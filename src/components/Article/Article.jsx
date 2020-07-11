@@ -7,7 +7,7 @@ import placeholder from '../../assets/img/placeholder.jpg';
 
 const Article = ({ article, onClick, history }) => {
   const month = article.publishedAt && article.publishedAt.split('T')[0];
-  const imgSrc = article.urlToImage !== 'null' ? article.urlToImage : placeholder;
+  const imgSrc = (article.urlToImage !== 'null' && article.urlToImage !== null) ? article.urlToImage : placeholder;
   
   const handleSourceClick = (e, source_id) => {
     e.stopPropagation();
