@@ -63,8 +63,8 @@ class Search extends PureComponent {
     return (
       <div className={styles.search}>
         <div className={ `${styles['search-wrapper']} ${isOpen ? styles['is-open'] : null }` }>
-          <div className={styles['search-wrapper__inner']}>
-            <div>
+          <div className={`${styles['search-wrapper__inner']} row`}>
+            <div className="col-md-3 col-sm-6 col-6">
               <label className={`${styles.label} ml-0`}>Enter some keywords</label>
               <input
                 ref={this.inputRef}
@@ -74,7 +74,7 @@ class Search extends PureComponent {
                 onChange={(e) => this.handleSearchChange(e)}
               />
             </div>
-            <div>
+            <div className="col-md-3 col-sm-6 col-6">
               <label className={styles.label}>Choose Source</label>
               <select onChange={(e) => this.handleSourceChange(e)}>
                 <option value="">All Sources</option>
@@ -83,7 +83,7 @@ class Search extends PureComponent {
                 )}
               </select>
             </div>
-            <div>
+            <div className="col-md-3 col-sm-6 col-6">
               <label className={styles.label}>Choose Sort </label>
               <select onChange={(e) => this.handleSortByChange(e)}>
                 <option value="">Sort By</option>
@@ -92,9 +92,11 @@ class Search extends PureComponent {
                 )}
               </select>
             </div>
+            <div className="col-md-3 col-sm-6 col-6 d-flex align-center justify-content-end">
+              <button onClick={this.handleCollapse}><i className="ti-close" /></button>
+              <button onClick={this.requestSearch}><i className="ti-search" /></button>
+            </div>
           </div>
-          <button onClick={this.handleCollapse}><i className="ti-close" /></button>
-          <button onClick={this.requestSearch}><i className="ti-search" /></button>
         </div>
         <button onClick={this.handleCollapse}><i className="ti-search" /></button>
       </div>

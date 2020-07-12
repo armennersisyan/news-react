@@ -2,6 +2,7 @@
 
 .header {
   position: fixed;
+  display: flex;
   width: 100%;
   top: 0;
   height: 60px;
@@ -29,12 +30,20 @@
         font-family: $secondary-font;
         color: #000;
         margin: 0;
+        @media only screen and (max-width: 767px) {
+          display: none;
+        }
       }
     }
   }
   .navigation {
     display: flex;
     align-items: center;
+    &__desktop {
+      @media only screen and (max-width: 767px) {
+        display: none !important;
+      }
+    }
     ul {
       display: flex;
       list-style-type: none;
@@ -77,6 +86,15 @@
         }
       }
     }
+    .hamburger-btn {
+      background: transparent;
+      border: none;
+      outline: none;
+      margin-left: 15px;
+      @media only screen and (min-width: 767px) {
+        display: none !important;
+      }
+    }
   }
   .contact-btn {
     background: $primary;
@@ -99,6 +117,12 @@
     opacity: 0;
     visibility: hidden;
     transition: 0.3s;
+    z-index: 9;
+    @media only screen and (max-width: 767px) {
+      box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+      padding: 15px;
+      height: 135px;
+    }
     &__inner {
       display: flex;
       width: 100%;
@@ -136,6 +160,68 @@
       margin-bottom: 0;
       margin-top: 10px;
       margin-left: 5px;
+    }
+  }
+  .mobileMenu {
+    @media only screen and (min-width: 767px) {
+      display: none;
+    }
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    background: #fff;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    transition: 0.3s;
+    &--is-open {
+      opacity: 1;
+      visibility: visible;
+      height: calc(100vh - 60px);
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      margin-top: 30px;
+      li {
+        text-align: center;
+        margin-bottom: 10px;
+        &.active {
+          a {
+            &:after {
+              width: 100%;
+            }
+          }
+        }
+        a {
+          position: relative;
+          color: $dark;
+          font-size: 19px;
+          margin-left: 15px;
+          transition: 0.3s;
+          text-decoration: none;
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: $primary;
+            display: inline-block;
+            z-index: 9;
+            transition: 0.3s;
+          }
+          &:hover {
+            &:after {
+              width: 100%;
+            }
+          }
+        }
+      }
     }
   }
 }

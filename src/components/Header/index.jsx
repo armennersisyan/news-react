@@ -13,6 +13,7 @@ class Home extends PureComponent {
     sources: [],
     allSources: [],
     openModal: false,
+    openHeader: false,
   };
   
   loadSources = () => {
@@ -37,15 +38,28 @@ class Home extends PureComponent {
     })
   };
   
+  handleHeaderOpen = () => {
+    this.setState((prevState) => ({
+      openHeader: !prevState.openHeader
+    }))
+  };
+  
   componentDidMount() {
     this.loadSources()
   }
   
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      this.setState({ openHeader: false })
+    }
+  }
+  
   render() {
     const { history } = this.props;
+    const { openHeader, openModal, sources, allSources } = this.state;
     return (
       <>
-        <header className={styles.header}>
+        <header className={`${styles.header}`}>
           <div className={`${styles.wrapper} container`}>
             <div className={styles.logo}>
               <Link to='/'>
@@ -54,8 +68,8 @@ class Home extends PureComponent {
               </Link>
             </div>
             <div className={styles.navigation}>
-              <ul>
-                { this.state.sources && this.state.sources.map(source => (
+              <ul className={styles['navigation__desktop']}>
+                { sources && sources.map(source => (
                     <li key={source.id} className={history.location.pathname === `/source/${source.id}` ? styles.active : ''}>
                       <Link to={`/source/${source.id}`}>
                         { source.name }
@@ -70,12 +84,29 @@ class Home extends PureComponent {
               >
                 Contact us
               </button>
-              <Search sources={this.state.allSources} />
+              <button
+                className={styles['hamburger-btn']}
+                onClick={this.handleHeaderOpen}
+              >
+                <i className="ti-agenda" />
+              </button>
+              <Search sources={allSources} />
             </div>
+          </div>
+          <div className={`${styles.mobileMenu} ${openHeader ? styles['mobileMenu--is-open'] : null}`}>
+            <ul>
+              { sources && sources.map(source => (
+                <li key={source.id} className={history.location.pathname === `/source/${source.id}` ? styles.active : ''}>
+                  <Link to={`/source/${source.id}`}>
+                    { source.name }
+                  </Link>
+                </li>))
+              }
+            </ul>
           </div>
         </header>
         <Modal
-          open={this.state.openModal}
+          open={openModal}
           onClose={this.handleModalClose}
         >
           <ContactForm />
